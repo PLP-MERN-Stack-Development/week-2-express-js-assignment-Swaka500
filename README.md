@@ -1,63 +1,108 @@
-[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-2e0aaae1b6195c2367325f4f02e2d04e9abb55f0b24a779b69b11b9e10269abc.svg)](https://classroom.github.com/online_ide?assignment_repo_id=19714127&assignment_repo_type=AssignmentRepo)
-# Express.js RESTful API Assignment
+# Product API - Express.js RESTful Server
 
-This assignment focuses on building a RESTful API using Express.js, implementing proper routing, middleware, and error handling.
+## Project Overview
 
-## Assignment Overview
+This project is a RESTful API built with Express.js that manages a product catalog.  
+It includes basic CRUD operations and advanced features like filtering, pagination, searching, and statistics.  
+It also implements middleware for logging, authentication, validation, and error handling.
 
-You will:
-1. Set up an Express.js server
-2. Create RESTful API routes for a product resource
-3. Implement custom middleware for logging, authentication, and validation
-4. Add comprehensive error handling
-5. Develop advanced features like filtering, pagination, and search
+## Setup & Running the Server
 
-## Getting Started
+### Prerequisites
+- Node.js v18 or higher recommended
+- npm (comes with Node.js)
 
-1. Accept the GitHub Classroom assignment invitation
-2. Clone your personal repository that was created by GitHub Classroom
+### Installation
+
+1. Clone the repository or download project files.
+2. Navigate to the project directory in your terminal.
 3. Install dependencies:
-   ```
+   ```bash
    npm install
-   ```
-4. Run the server:
-   ```
-   npm start
-   ```
 
-## Files Included
+# Create a .env file based on .env.example and add your API key
 
-- `Week2-Assignment.md`: Detailed assignment instructions
-- `server.js`: Starter Express.js server file
-- `.env.example`: Example environment variables file
+API_KEY=mysecretapikey
 
-## Requirements
+Run the server:
+node server.js
 
-- Node.js (v18 or higher)
-- npm or yarn
-- Postman, Insomnia, or curl for API testing
+Server will start on port 3000 by default:
+Server is running on http://localhost:3000
 
-## API Endpoints
+# 🛠 Environment Variables
+Variable	Description	Example
+API_KEY	API key for requests	mysecretapikey
 
-The API will have the following endpoints:
+# 🔑 Authentication
+All API requests require the following header with your API key:
+x-api-key: your_api_key_here
 
-- `GET /api/products`: Get all products
-- `GET /api/products/:id`: Get a specific product
-- `POST /api/products`: Create a new product
-- `PUT /api/products/:id`: Update a product
-- `DELETE /api/products/:id`: Delete a product
+# 📦 API Endpoints
+1. Get all products (with optional filtering and pagination)
+GET /api/products
 
-## Submission
+# Query Parameters
+Parameter	Description	Example
+category	Filter by product category	electronics
+page	Page number for pagination	1 (default)
+limit	Items per page	10 (default)
+curl -H "x-api-key: mysecretapikey" "http://localhost:3000/api/products?category=electronics&page
 
-Your work will be automatically submitted when you push to your GitHub Classroom repository. Make sure to:
+# Get a product by ID
+GET /api/products/:id
 
-1. Complete all the required API endpoints
-2. Implement the middleware and error handling
-3. Document your API in the README.md
-4. Include examples of requests and responses
+Example Request:
+curl -H "x-api-key: mysecretapikey" http://localhost:3000/api/products/1
 
-## Resources
+# Create a new product
+POST /api/products
 
-- [Express.js Documentation](https://expressjs.com/)
-- [RESTful API Design Best Practices](https://restfulapi.net/)
-- [HTTP Status Codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status) 
+Body (JSON):
+{
+  "name": "New Product",
+  "description": "Product description",
+  "price": 100,
+  "category": "category_name",
+  "inStock": true
+}
+
+# Example Request:
+curl -X POST -H "Content-Type: application/json" -H "x-api-key: mysecretapikey" -d '{"name":"New}
+
+# Update a product
+PUT /api/products/:id
+
+Body (JSON): same structure as POST
+
+# Delete a product
+DELETE /api/products/:id
+
+# Search products by name
+GET /api/products/search?name=keyword
+
+# Get product statistics (count by category)
+GET /api/products/stats
+
+# ⚠️ Error Handling
+The API returns JSON errors with appropriate HTTP status codes:
+Status Code	Description
+400	Bad Request (validation errors)
+401	Unauthorized (missing or invalid API key)
+404	Not Found (product not found)
+500	Internal Server Error (unexpected errors)
+
+# 📝 Notes
+API key is required for all requests.
+
+Data is stored in-memory — all changes reset when the server restarts.
+
+Feel free to extend or connect this API to a database for persistence.
+
+# 📂 .env.example
+Rename this file to .env and fill in your API key:
+PI_KEY=mysecretapikey
+
+# 📬 Contact
+If you have any questions or feedback, feel free to reach out!
+Email me: derrickswaka910@gmail.com
